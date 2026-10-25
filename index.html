@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OnboardBuddy – Nusantara Tech</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#2563EB',
+            'primary-dark': '#1d4ed8',
+            success: '#047857',
+            'success-light': '#d1fae5',
+          },
+          fontFamily: {
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!-- Custom CSS tambahan -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased">
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="bg-white shadow-sm sticky top-0 z-50" role="banner">
+    <nav class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between" aria-label="Navigasi utama">
+      <!-- Logo -->
+      <a href="#dashboard" class="flex items-center gap-2 text-primary font-bold text-xl focus-ring" aria-label="OnboardBuddy – ke halaman utama">
+        <span class="bg-primary text-white rounded-lg w-8 h-8 flex items-center justify-center text-sm font-bold" aria-hidden="true">OB</span>
+        OnboardBuddy
+      </a>
+
+      <!-- Menu desktop -->
+      <ul class="hidden md:flex items-center gap-1 text-sm font-medium" role="list">
+        <li><a href="#dashboard"    class="nav-link px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-primary transition-colors focus-ring">Dashboard</a></li>
+        <li><a href="#checklist"    class="nav-link px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-primary transition-colors focus-ring">Checklist</a></li>
+        <li><a href="#faq"          class="nav-link px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-primary transition-colors focus-ring">FAQ</a></li>
+        <li><a href="#tanya-buddy"  class="nav-link px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-primary transition-colors focus-ring">Tanya Buddy</a></li>
+        <li><a href="#kontak"       class="nav-link px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-primary transition-colors focus-ring">Kontak</a></li>
+        <li><a href="#setup-guide"  class="nav-link px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-primary transition-colors focus-ring">Setup Guide</a></li>
+      </ul>
+
+      <!-- Tombol hamburger mobile -->
+      <button id="btn-menu" class="md:hidden p-2 rounded-lg hover:bg-gray-100 focus-ring" aria-label="Buka menu navigasi" aria-expanded="false" aria-controls="mobile-menu">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </nav>
+
+    <!-- Menu mobile -->
+    <div id="mobile-menu" class="md:hidden hidden bg-white border-t border-gray-100 px-4 pb-4" role="navigation" aria-label="Menu mobile">
+      <ul class="flex flex-col gap-1 pt-2 text-sm font-medium" role="list">
+        <li><a href="#dashboard"    class="nav-link block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-primary transition-colors focus-ring">Dashboard</a></li>
+        <li><a href="#checklist"    class="nav-link block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-primary transition-colors focus-ring">Checklist</a></li>
+        <li><a href="#faq"          class="nav-link block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-primary transition-colors focus-ring">FAQ</a></li>
+        <li><a href="#tanya-buddy"  class="nav-link block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-primary transition-colors focus-ring">Tanya Buddy</a></li>
+        <li><a href="#kontak"       class="nav-link block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-primary transition-colors focus-ring">Kontak</a></li>
+        <li><a href="#setup-guide"  class="nav-link block px-3 py-2 rounded-lg hover:bg-blue-50 hover:text-primary transition-colors focus-ring">Setup Guide</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="main-content" class="max-w-6xl mx-auto px-4 py-8 space-y-16">
+
+    <!-- ===================== DASHBOARD ===================== -->
+    <section id="dashboard" class="scroll-mt-20" aria-labelledby="heading-dashboard">
+      <div class="bg-gradient-to-br from-primary to-primary-dark rounded-2xl p-6 md:p-8 text-white mb-8">
+        <p class="text-blue-200 text-sm font-medium mb-1">Selamat datang di Nusantara Tech 👋</p>
+        <h1 id="heading-dashboard" class="text-2xl md:text-3xl font-bold mb-1">Halo, Rina!</h1>
+        <p class="text-blue-100 text-sm mb-4">Junior Frontend Developer &nbsp;·&nbsp; Hari ke-<strong>3</strong> onboarding</p>
+
+        <!-- Progress bar total -->
+        <div class="bg-white/20 rounded-xl p-4">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm font-medium">Progress Onboarding</span>
+            <span id="total-progress-label" class="text-sm font-bold" aria-live="polite">0%</span>
+          </div>
+          <div class="bg-white/30 rounded-full h-3 overflow-hidden" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Progress onboarding keseluruhan" id="total-progressbar-wrap">
+            <div id="total-progress-bar" class="h-full bg-white rounded-full transition-all duration-500" style="width:0%"></div>
+          </div>
+          <p class="text-blue-100 text-xs mt-2" id="total-progress-desc">Selesaikan tugas checklist untuk meningkatkan progres.</p>
+        </div>
+      </div>
+
+      <!-- Kartu tugas berikutnya -->
+      <div>
+        <h2 class="text-lg font-semibold text-gray-700 mb-3">📋 Tugas Berikutnya</h2>
+        <div id="next-tasks-container" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4" aria-live="polite" aria-label="Tugas berikutnya yang belum selesai">
+          <!-- Diisi oleh JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CHECKLIST ===================== -->
+    <section id="checklist" class="scroll-mt-20" aria-labelledby="heading-checklist">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h2 id="heading-checklist" class="text-2xl font-bold text-gray-800">Checklist Onboarding</h2>
+          <p class="text-gray-500 text-sm mt-1">Tandai tugas yang sudah kamu selesaikan.</p>
+        </div>
+        <button id="btn-reset-checklist" class="text-xs text-red-500 hover:text-red-700 underline focus-ring px-2 py-1 rounded" aria-label="Reset semua checklist ke kondisi awal">Reset</button>
+      </div>
+
+      <!-- Tiga fase checklist -->
+      <div id="checklist-container" class="space-y-6">
+        <!-- Diisi oleh JavaScript -->
+      </div>
+    </section>
+
+    <!-- ===================== FAQ ===================== -->
+    <section id="faq" class="scroll-mt-20" aria-labelledby="heading-faq">
+      <h2 id="heading-faq" class="text-2xl font-bold text-gray-800 mb-2">Pusat FAQ</h2>
+      <p class="text-gray-500 text-sm mb-6">Temukan jawaban atas pertanyaan umum seputar onboarding.</p>
+
+      <!-- Pencarian & filter -->
+      <div class="flex flex-col sm:flex-row gap-3 mb-6">
+        <div class="relative flex-1">
+          <label for="faq-search" class="sr-only">Cari pertanyaan FAQ</label>
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+          </svg>
+          <input id="faq-search" type="search" placeholder="Cari pertanyaan…" class="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary bg-white" aria-controls="faq-list" />
+        </div>
+        <div>
+          <label for="faq-filter" class="sr-only">Filter kategori FAQ</label>
+          <select id="faq-filter" class="w-full sm:w-auto px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary bg-white cursor-pointer">
+            <option value="">Semua Kategori</option>
+            <option value="Akses & Akun">Akses &amp; Akun</option>
+            <option value="Tools Development">Tools Development</option>
+            <option value="Proses Kerja">Proses Kerja</option>
+            <option value="Budaya Tim">Budaya Tim</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Daftar FAQ -->
+      <div id="faq-list" class="space-y-3" aria-live="polite" aria-label="Daftar FAQ">
+        <!-- Diisi oleh JavaScript -->
+      </div>
+      <p id="faq-empty" class="text-center text-gray-400 text-sm py-8 hidden">Tidak ada FAQ yang cocok dengan pencarianmu.</p>
+    </section>
+
+    <!-- ===================== TANYA BUDDY ===================== -->
+    <section id="tanya-buddy" class="scroll-mt-20" aria-labelledby="heading-buddy">
+      <h2 id="heading-buddy" class="text-2xl font-bold text-gray-800 mb-2">Tanya Buddy</h2>
+      <p class="text-gray-500 text-sm mb-6">Ketikkan pertanyaanmu dan Buddy akan mencari jawabannya dari FAQ.</p>
+
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col" style="height:420px">
+        <!-- Area chat -->
+        <div id="chat-messages" class="flex-1 overflow-y-auto p-4 space-y-3" aria-live="polite" aria-label="Percakapan dengan Buddy" role="log">
+          <!-- Pesan awal dari Buddy -->
+          <div class="flex items-start gap-2">
+            <div class="w-8 h-8 rounded-full bg-primary flex-shrink-0 flex items-center justify-center text-white text-xs font-bold" aria-hidden="true">B</div>
+            <div class="chat-bubble-buddy bg-blue-50 text-gray-700 rounded-2xl rounded-tl-sm px-4 py-2.5 text-sm max-w-xs md:max-w-md">
+              Hei Rina! Saya <strong>Buddy</strong> 👋<br/>Tanyakan apapun seputar onboarding, dan saya akan bantu temukan jawabannya.
+            </div>
+          </div>
+        </div>
+
+        <!-- Input chat -->
+        <div class="border-t border-gray-100 p-3 flex gap-2 bg-gray-50">
+          <label for="chat-input" class="sr-only">Ketik pertanyaanmu</label>
+          <input id="chat-input" type="text" placeholder="Ketik pertanyaanmu di sini…" class="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary bg-white" aria-label="Input pertanyaan ke Buddy" />
+          <button id="btn-send-chat" class="bg-primary text-white px-4 py-2.5 rounded-xl text-sm font-medium hover:bg-primary-dark transition-colors focus-ring min-w-[44px] min-h-[44px]" aria-label="Kirim pertanyaan">Kirim</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== KONTAK ===================== -->
+    <section id="kontak" class="scroll-mt-20" aria-labelledby="heading-kontak">
+      <h2 id="heading-kontak" class="text-2xl font-bold text-gray-800 mb-2">Direktori Kontak</h2>
+      <p class="text-gray-500 text-sm mb-6">Butuh bantuan? Hubungi orang yang tepat.</p>
+      <div id="kontak-container" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Diisi oleh JavaScript -->
+      </div>
+    </section>
+
+    <!-- ===================== SETUP GUIDE ===================== -->
+    <section id="setup-guide" class="scroll-mt-20" aria-labelledby="heading-setup">
+      <h2 id="heading-setup" class="text-2xl font-bold text-gray-800 mb-2">Setup Guide</h2>
+      <p class="text-gray-500 text-sm mb-6">Panduan langkah demi langkah menyiapkan environment kerja.</p>
+      <div id="accordion-container" class="space-y-3">
+        <!-- Diisi oleh JavaScript -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="mt-16 border-t border-gray-200 bg-white" role="contentinfo">
+    <div class="max-w-6xl mx-auto px-4 py-6 text-center text-gray-400 text-sm">
+      <p>© 2025 <strong class="text-gray-600">Nusantara Tech</strong> · OnboardBuddy v1.0</p>
+      <p class="mt-1 text-xs">Dibuat untuk mempercepat onboarding anggota baru tim IT.</p>
+    </div>
+  </footer>
+
+  <!-- Script utama -->
+  <script src="script.js"></script>
+</body>
+</html>

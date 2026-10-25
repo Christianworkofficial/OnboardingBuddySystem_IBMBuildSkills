@@ -1,0 +1,152 @@
+/*
+ * style.css – OnboardBuddy, Nusantara Tech
+ * Hanya berisi style tambahan yang tidak dapat ditangani murni oleh Tailwind.
+ * Styling utama ada di kelas Tailwind di index.html dan script.js.
+ */
+
+/* ===================== RESET / BASE ===================== */
+
+/* Smooth scroll untuk seluruh halaman */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Hilangkan margin default body yang kadang muncul di beberapa browser */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* ===================== FOCUS RING GLOBAL =====================
+   Kelas .focus-ring memberikan outline yang jelas untuk navigasi keyboard.
+   Memenuhi standar WCAG AA untuk fokus yang terlihat.
+*/
+.focus-ring:focus-visible {
+  outline: 2px solid #2563EB;
+  outline-offset: 2px;
+}
+
+/* Hilangkan outline default hanya jika :focus-visible tersedia,
+   agar mouse user tidak melihat ring, keyboard user tetap melihatnya. */
+.focus-ring:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ===================== NAVBAR ===================== */
+
+/* Link aktif di navbar (dikelola via JS scroll spy) */
+.nav-link.active {
+  color: #2563EB;
+  background-color: #eff6ff;
+}
+
+/* ===================== CHECKLIST ===================== */
+
+/* Label tugas yang sudah selesai */
+.checklist-item.is-done span {
+  text-decoration: line-through;
+  color: #9ca3af;
+}
+
+/* Hover state checkbox custom agar terasa klikable di area penuh */
+.checklist-item:hover {
+  cursor: pointer;
+}
+
+/* ===================== FAQ ACCORDION ===================== */
+
+/* Animasi pembuka panel FAQ */
+.faq-answer {
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===================== CHAT BUBBLE ===================== */
+
+/* Gaya gelembung chat agar teks panjang tetap rapi */
+.chat-bubble-buddy,
+#chat-messages .bg-primary {
+  word-break: break-word;
+  hyphens: auto;
+}
+
+/* Scrollbar chat yang lebih halus */
+#chat-messages::-webkit-scrollbar {
+  width: 4px;
+}
+#chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+#chat-messages::-webkit-scrollbar-thumb {
+  background-color: #e5e7eb;
+  border-radius: 99px;
+}
+
+/* ===================== PROGRESS BAR ===================== */
+
+/* Transisi halus pada progress bar (sudah ada di Tailwind, ini sebagai fallback) */
+[role="progressbar"] > div {
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===================== CODE BLOCK DI SETUP GUIDE ===================== */
+
+/* Scrollbar horizontal untuk blok kode */
+pre::-webkit-scrollbar {
+  height: 4px;
+}
+pre::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+pre::-webkit-scrollbar-thumb {
+  background-color: #4b5563;
+  border-radius: 99px;
+}
+
+/* Font monospace konsisten untuk kode */
+pre, code {
+  font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+/* ===================== KARTU HOVER ===================== */
+
+/* Transisi kartu tugas berikutnya & kontak */
+.hover\:-translate-y-0\.5:hover {
+  --tw-translate-y: -0.125rem;
+}
+
+/* ===================== RESPONSIF ===================== */
+
+/* Padding section extra pada layar sangat kecil */
+@media (max-width: 360px) {
+  main {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+}
+
+/* ===================== PRINT ===================== */
+
+/* Sembunyikan elemen interaktif saat print */
+@media print {
+  header,
+  #tanya-buddy,
+  #btn-reset-checklist,
+  footer {
+    display: none;
+  }
+  main {
+    padding: 0;
+  }
+}
