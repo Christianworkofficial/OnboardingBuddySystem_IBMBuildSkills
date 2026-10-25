@@ -706,6 +706,66 @@ function renderSetupGuide() {
 }
 
 /* =============================================================
+   TEMA: toggle mode terang / gelap
+   Membaca, menyimpan, dan menerapkan tema ke <html data-theme>.
+   ============================================================= */
+
+/**
+ * Perbarui ikon dan aria-label tombol tema sesuai tema aktif.
+ * @param {boolean} isDark - true jika tema gelap sedang aktif
+ */
+function updateThemeButton(isDark) {
+  const btn = document.getElementById('btn-theme');
+  const iconSun = document.getElementById('icon-sun');
+  const iconMoon = document.getElementById('icon-moon');
+  if (!btn) return;
+
+  if (isDark) {
+    // Tema gelap aktif → tampilkan ikon bulan, label untuk ganti ke terang
+    iconSun.classList.add('hidden');
+    iconMoon.classList.remove('hidden');
+    btn.setAttribute('aria-label', 'Ganti ke mode terang');
+    btn.setAttribute('aria-pressed', 'true');
+  } else {
+    // Tema terang aktif → tampilkan ikon matahari, label untuk ganti ke gelap
+    iconSun.classList.remove('hidden');
+    iconMoon.classList.add('hidden');
+    btn.setAttribute('aria-label', 'Ganti ke mode gelap');
+    btn.setAttribute('aria-pressed', 'false');
+  }
+}
+
+/**
+ * Inisialisasi sistem tema:
+ * - Baca status tema awal dari <html> (sudah diset oleh skrip anti-flash di <head>)
+ * - Perbarui tampilan tombol agar sesuai
+ * - Pasang event listener klik pada tombol toggle
+ */
+function initTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('btn-theme');
+  if (!btn) return;
+
+  // Baca tema awal — sudah diset oleh skrip inline di <head>
+  let isDark = html.getAttribute('data-theme') === 'dark';
+  updateThemeButton(isDark);
+
+  btn.addEventListener('click', () => {
+    isDark = !isDark;
+
+    if (isDark) {
+      html.setAttribute('data-theme', 'dark');
+      localStorage.setItem('ob_theme', 'dark');
+    } else {
+      html.removeAttribute('data-theme');
+      localStorage.setItem('ob_theme', 'light');
+    }
+
+    updateThemeButton(isDark);
+  });
+}
+
+/* =============================================================
    NAVBAR: hamburger menu toggle
    ============================================================= */
 function initNavbar() {
@@ -825,6 +885,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSetupGuide();
 
   // Inisialisasi interaksi
+  initTheme();        // ← harus pertama agar tombol langsung mencerminkan tema awal
   initNavbar();
   initScrollSpy();
   initFaqInteraksi();

@@ -1,152 +1,573 @@
 /*
  * style.css – OnboardBuddy, Nusantara Tech
- * Hanya berisi style tambahan yang tidak dapat ditangani murni oleh Tailwind.
- * Styling utama ada di kelas Tailwind di index.html dan script.js.
+ * Berisi: CSS custom properties tema terang/gelap, overrides dark mode,
+ * transisi tema, dan style tambahan yang tidak bisa ditangani Tailwind murni.
  */
 
-/* ===================== RESET / BASE ===================== */
+/* =============================================================
+   CSS CUSTOM PROPERTIES — TEMA TERANG (default)
+   Semua warna komponen mengacu ke variabel ini.
+   ============================================================= */
+:root {
+  /* Latar */
+  --bg-page:       #F8FAFC;
+  --bg-card:       #FFFFFF;
+  --bg-card-hover: #F1F5F9;
+  --bg-input:      #FFFFFF;
+  --bg-nav:        #FFFFFF;
+  --bg-footer:     #FFFFFF;
+  --bg-chat-area:  #FFFFFF;
+  --bg-chat-footer:#F8FAFC;
+  --bg-muted:      #F1F5F9;
 
-/* Smooth scroll untuk seluruh halaman */
+  /* Teks */
+  --text-primary:   #0F172A;
+  --text-secondary: #475569;
+  --text-muted:     #94A3B8;
+  --text-heading:   #0F172A;
+
+  /* Border */
+  --border-default: #E2E8F0;
+  --border-muted:   #F1F5F9;
+  --divide-color:   #F1F5F9;
+
+  /* Warna aksi / brand */
+  --color-primary:      #1D4ED8;
+  --color-primary-dark: #1e40af;
+  --color-primary-light:#DBEAFE;
+  --color-success:      #047857;
+  --color-success-bg:   #D1FAE5;
+
+  /* Komponen spesifik */
+  --nav-link-hover-bg:  #EFF6FF;
+  --nav-link-hover-text:#1D4ED8;
+  --checkbox-border:    #CBD5E1;
+  --chat-bubble-buddy-bg:  #EFF6FF;
+  --chat-bubble-buddy-text:#0F172A;
+  --chat-bubble-user-bg:   #1D4ED8;
+  --chat-bubble-user-text: #FFFFFF;
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.07);
+  --shadow-card-hover: 0 4px 12px 0 rgb(0 0 0 / 0.10);
+
+  /* Focus ring */
+  --focus-ring-color: #1D4ED8;
+}
+
+/* =============================================================
+   CSS CUSTOM PROPERTIES — TEMA GELAP
+   Diterapkan saat <html data-theme="dark">
+   ============================================================= */
+[data-theme="dark"] {
+  /* Latar */
+  --bg-page:       #0F172A;
+  --bg-card:       #1E293B;
+  --bg-card-hover: #263348;
+  --bg-input:      #1E293B;
+  --bg-nav:        #1E293B;
+  --bg-footer:     #1E293B;
+  --bg-chat-area:  #1E293B;
+  --bg-chat-footer:#0F172A;
+  --bg-muted:      #263348;
+
+  /* Teks */
+  --text-primary:   #F1F5F9;
+  --text-secondary: #CBD5E1;
+  --text-muted:     #64748B;
+  --text-heading:   #F1F5F9;
+
+  /* Border */
+  --border-default: #334155;
+  --border-muted:   #1E293B;
+  --divide-color:   #334155;
+
+  /* Warna aksi / brand */
+  --color-primary:      #60A5FA;
+  --color-primary-dark: #3B82F6;
+  --color-primary-light:#1E3A5F;
+  --color-success:      #34D399;
+  --color-success-bg:   #064E3B;
+
+  /* Komponen spesifik */
+  --nav-link-hover-bg:  #1E3A5F;
+  --nav-link-hover-text:#60A5FA;
+  --checkbox-border:    #475569;
+  --chat-bubble-buddy-bg:  #1E3A5F;
+  --chat-bubble-buddy-text:#F1F5F9;
+  --chat-bubble-user-bg:   #2563EB;
+  --chat-bubble-user-text: #FFFFFF;
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.3), 0 1px 2px -1px rgb(0 0 0 / 0.3);
+  --shadow-card-hover: 0 4px 12px 0 rgb(0 0 0 / 0.4);
+
+  /* Focus ring */
+  --focus-ring-color: #60A5FA;
+}
+
+/* =============================================================
+   TRANSISI HALUS SAAT GANTI TEMA
+   Berlaku untuk semua elemen — ~200ms.
+   ============================================================= */
+*, *::before, *::after {
+  box-sizing: border-box;
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
+}
+
+/* Kecualikan elemen yang transisinya sudah spesifik (transform, width, dll.) */
+.transition-all,
+.transition-colors,
+[class*="duration-"] {
+  transition-property: all;
+}
+
+/* =============================================================
+   BASE: HALAMAN & BODY
+   ============================================================= */
 html {
   scroll-behavior: smooth;
 }
 
-/* Hilangkan margin default body yang kadang muncul di beberapa browser */
-*, *::before, *::after {
-  box-sizing: border-box;
+body {
+  background-color: var(--bg-page);
+  color: var(--text-primary);
 }
 
-/* ===================== FOCUS RING GLOBAL =====================
-   Kelas .focus-ring memberikan outline yang jelas untuk navigasi keyboard.
-   Memenuhi standar WCAG AA untuk fokus yang terlihat.
-*/
-.focus-ring:focus-visible {
-  outline: 2px solid #2563EB;
-  outline-offset: 2px;
+/* =============================================================
+   NAVBAR
+   ============================================================= */
+header {
+  background-color: var(--bg-nav);
+  border-bottom: 1px solid var(--border-default);
 }
 
-/* Hilangkan outline default hanya jika :focus-visible tersedia,
-   agar mouse user tidak melihat ring, keyboard user tetap melihatnya. */
-.focus-ring:focus:not(:focus-visible) {
-  outline: none;
+/* Menu mobile */
+#mobile-menu {
+  background-color: var(--bg-nav);
+  border-top-color: var(--border-default);
 }
 
-/* ===================== NAVBAR ===================== */
-
-/* Link aktif di navbar (dikelola via JS scroll spy) */
-.nav-link.active {
-  color: #2563EB;
-  background-color: #eff6ff;
+/* Link navigasi */
+.nav-link {
+  color: var(--text-secondary);
+}
+.nav-link:hover {
+  background-color: var(--nav-link-hover-bg);
+  color: var(--nav-link-hover-text);
+}
+.nav-link.text-primary,
+.nav-link.bg-blue-50 {
+  background-color: var(--nav-link-hover-bg) !important;
+  color: var(--nav-link-hover-text) !important;
 }
 
-/* ===================== CHECKLIST ===================== */
+/* Tombol hamburger */
+#btn-menu {
+  color: var(--text-secondary);
+}
+#btn-menu:hover {
+  background-color: var(--bg-muted);
+}
 
-/* Label tugas yang sudah selesai */
+/* =============================================================
+   HEADING & TEKS SECTION
+   ============================================================= */
+h1, h2, h3 {
+  color: var(--text-heading);
+}
+
+/* Kelas utilitas teks yang di-hardcode di HTML */
+.text-gray-800 { color: var(--text-heading) !important; }
+.text-gray-700 { color: var(--text-primary) !important; }
+.text-gray-600 { color: var(--text-secondary) !important; }
+.text-gray-500 { color: var(--text-secondary) !important; }
+.text-gray-400 { color: var(--text-muted) !important; }
+
+/* =============================================================
+   KARTU UMUM
+   ============================================================= */
+.bg-white {
+  background-color: var(--bg-card) !important;
+}
+.border-gray-100 {
+  border-color: var(--border-default) !important;
+}
+.border-gray-200 {
+  border-color: var(--border-default) !important;
+}
+.shadow-sm {
+  box-shadow: var(--shadow-card) !important;
+}
+.hover\:shadow-md:hover {
+  box-shadow: var(--shadow-card-hover) !important;
+}
+
+/* Hover latar kartu */
+.hover\:bg-gray-50:hover {
+  background-color: var(--bg-card-hover) !important;
+}
+
+/* =============================================================
+   FOOTER
+   ============================================================= */
+footer {
+  background-color: var(--bg-footer);
+  border-top-color: var(--border-default);
+}
+
+/* =============================================================
+   DASHBOARD — Kartu "Tugas Berikutnya"
+   (Hero card gradient tidak perlu diubah — sudah oke di dua mode)
+   ============================================================= */
+#next-tasks-container .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+#next-tasks-container .text-gray-700 {
+  color: var(--text-primary) !important;
+}
+/* Link "Kerjakan sekarang" di kartu tugas berikutnya */
+#next-tasks-container a {
+  color: var(--color-primary);
+}
+
+/* =============================================================
+   CHECKLIST
+   ============================================================= */
+
+/* Header fase: override warna bg dan border */
+.bg-blue-50   { background-color: color-mix(in srgb, var(--bg-muted) 80%, #3B82F6 20%) !important; }
+.bg-indigo-50 { background-color: color-mix(in srgb, var(--bg-muted) 80%, #6366F1 20%) !important; }
+.bg-violet-50 { background-color: color-mix(in srgb, var(--bg-muted) 80%, #8B5CF6 20%) !important; }
+
+/* Teks judul fase */
+.text-gray-800 { color: var(--text-heading) !important; }
+
+/* Divider antar tugas */
+.divide-y > * + * {
+  border-top-color: var(--divide-color);
+}
+.divide-gray-50 > * + * {
+  border-top-color: var(--divide-color) !important;
+}
+
+/* Checkbox kosong */
+.border-gray-300 {
+  border-color: var(--checkbox-border) !important;
+}
+
+/* Checkbox background saat belum dicentang */
+[data-theme="dark"] .bg-white.group-hover\:border-primary {
+  background-color: var(--bg-card) !important;
+}
+
+/* Progress bar track (bg-white/70 di dalam header fase) */
+[data-theme="dark"] .bg-white\/70 {
+  background-color: rgba(255,255,255,0.12) !important;
+}
+
+/* Tugas selesai: teks dicoret */
 .checklist-item.is-done span {
   text-decoration: line-through;
-  color: #9ca3af;
+  color: var(--text-muted);
 }
 
-/* Hover state checkbox custom agar terasa klikable di area penuh */
+/* Hover label checklist */
 .checklist-item:hover {
   cursor: pointer;
 }
 
-/* ===================== FAQ ACCORDION ===================== */
+/* =============================================================
+   FAQ
+   ============================================================= */
+#faq-search,
+#faq-filter {
+  background-color: var(--bg-input);
+  border-color: var(--border-default);
+  color: var(--text-primary);
+}
+#faq-search::placeholder {
+  color: var(--text-muted);
+}
+#faq-search:focus,
+#faq-filter:focus {
+  border-color: var(--color-primary);
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 25%, transparent);
+}
 
-/* Animasi pembuka panel FAQ */
+/* Ikon search di FAQ */
+#faq .text-gray-400 {
+  color: var(--text-muted) !important;
+}
+
+/* Jawaban FAQ */
 .faq-answer {
+  background-color: var(--bg-card);
+  color: var(--text-secondary);
+  border-top-color: var(--border-muted);
   animation: slideDown 0.2s ease-out;
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Border separator accordion FAQ */
+.border-gray-50 {
+  border-color: var(--border-muted) !important;
 }
 
-/* ===================== CHAT BUBBLE ===================== */
+/* Chevron */
+.faq-chevron,
+.setup-chevron {
+  color: var(--text-muted);
+}
 
-/* Gaya gelembung chat agar teks panjang tetap rapi */
+/* Teks pertanyaan FAQ */
+[id^="faq-btn-"] .text-gray-800 {
+  color: var(--text-heading) !important;
+}
+
+/* Pesan "tidak ada FAQ" */
+#faq-empty {
+  color: var(--text-muted);
+}
+
+/* =============================================================
+   TANYA BUDDY — Chat
+   ============================================================= */
+#tanya-buddy > div {
+  background-color: var(--bg-chat-area);
+  border-color: var(--border-default);
+}
+
+/* Area pesan */
+#chat-messages {
+  background-color: var(--bg-chat-area);
+}
+
+/* Footer input chat */
+#tanya-buddy .border-t {
+  border-top-color: var(--border-default);
+  background-color: var(--bg-chat-footer);
+}
+
+/* Input teks */
+#chat-input {
+  background-color: var(--bg-input);
+  border-color: var(--border-default);
+  color: var(--text-primary);
+}
+#chat-input::placeholder {
+  color: var(--text-muted);
+}
+#chat-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 25%, transparent);
+}
+
+/* Tombol kirim */
+#btn-send-chat {
+  background-color: var(--color-primary);
+}
+#btn-send-chat:hover {
+  background-color: var(--color-primary-dark);
+}
+
+/* Bubble Buddy */
 .chat-bubble-buddy,
-#chat-messages .bg-primary {
+.bg-blue-50.rounded-2xl {
+  background-color: var(--chat-bubble-buddy-bg) !important;
+  color: var(--chat-bubble-buddy-text) !important;
   word-break: break-word;
   hyphens: auto;
 }
 
-/* Scrollbar chat yang lebih halus */
-#chat-messages::-webkit-scrollbar {
-  width: 4px;
+/* Avatar Buddy */
+[data-theme="dark"] .bg-gray-200 {
+  background-color: #334155 !important;
+  color: var(--text-primary) !important;
 }
-#chat-messages::-webkit-scrollbar-track {
-  background: transparent;
-}
+
+/* Scrollbar chat */
+#chat-messages::-webkit-scrollbar { width: 4px; }
+#chat-messages::-webkit-scrollbar-track { background: transparent; }
 #chat-messages::-webkit-scrollbar-thumb {
-  background-color: #e5e7eb;
+  background-color: var(--border-default);
   border-radius: 99px;
 }
 
-/* ===================== PROGRESS BAR ===================== */
+/* =============================================================
+   KONTAK
+   ============================================================= */
+/* Latar ikon kontak — sedikit lebih gelap di dark mode */
+[data-theme="dark"] .bg-blue-100    { background-color: #1E3A5F !important; }
+[data-theme="dark"] .bg-indigo-100  { background-color: #1e1b4b !important; }
+[data-theme="dark"] .bg-violet-100  { background-color: #2e1065 !important; }
+[data-theme="dark"] .bg-emerald-100 { background-color: #064E3B !important; }
 
-/* Transisi halus pada progress bar (sudah ada di Tailwind, ini sebagai fallback) */
-[role="progressbar"] > div {
-  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+/* Teks peran kontak */
+[data-theme="dark"] .text-blue-700    { color: #93C5FD !important; }
+[data-theme="dark"] .text-indigo-700  { color: #A5B4FC !important; }
+[data-theme="dark"] .text-violet-700  { color: #C4B5FD !important; }
+[data-theme="dark"] .text-emerald-700 { color: #6EE7B7 !important; }
+
+/* Border kartu kontak */
+[data-theme="dark"] .border-blue-100    { border-color: #1E3A5F !important; }
+[data-theme="dark"] .border-indigo-100  { border-color: #1e1b4b !important; }
+[data-theme="dark"] .border-violet-100  { border-color: #2e1065 !important; }
+[data-theme="dark"] .border-emerald-100 { border-color: #064E3B !important; }
+
+/* Link email */
+#kontak-container a {
+  color: var(--color-primary);
 }
 
-/* ===================== CODE BLOCK DI SETUP GUIDE ===================== */
-
-/* Scrollbar horizontal untuk blok kode */
-pre::-webkit-scrollbar {
-  height: 4px;
+/* =============================================================
+   SETUP GUIDE — Accordion
+   ============================================================= */
+/* Tombol header accordion */
+[id^="setup-btn-"] {
+  color: var(--text-heading);
 }
-pre::-webkit-scrollbar-track {
-  background: #1f2937;
-}
-pre::-webkit-scrollbar-thumb {
-  background-color: #4b5563;
-  border-radius: 99px;
+[id^="setup-btn-"]:hover {
+  background-color: var(--bg-card-hover);
 }
 
-/* Font monospace konsisten untuk kode */
+/* Body accordion */
+[id^="setup-body-"] {
+  color: var(--text-secondary);
+  background-color: var(--bg-card);
+  border-top-color: var(--border-muted);
+}
+
+/* Badge checklist akhir di setup guide */
+[data-theme="dark"] .text-success {
+  color: var(--color-success) !important;
+}
+
+/* Code block — tetap gelap di dua mode (baik secara desain) */
+pre {
+  background-color: #0d1117 !important;
+  color: #4ade80;
+}
+[data-theme="dark"] pre {
+  background-color: #090e14 !important;
+}
+pre::-webkit-scrollbar { height: 4px; }
+pre::-webkit-scrollbar-track { background: #1f2937; }
+pre::-webkit-scrollbar-thumb { background-color: #4b5563; border-radius: 99px; }
+
+/* Inline code */
+code:not(pre code) {
+  background-color: var(--bg-muted);
+  color: var(--text-secondary);
+  padding: 0 0.25rem;
+  border-radius: 0.25rem;
+}
+
+/* Font monospace */
 pre, code {
   font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
   font-size: 0.8rem;
   line-height: 1.6;
 }
 
-/* ===================== KARTU HOVER ===================== */
+/* =============================================================
+   FAQ + CHECKLIST — Badge warna kategori
+   Dark mode: naikkan kontras badge
+   ============================================================= */
+[data-theme="dark"] .bg-blue-100.text-blue-700 {
+  background-color: #1E3A5F !important;
+  color: #93C5FD !important;
+}
+[data-theme="dark"] .bg-orange-100.text-orange-700 {
+  background-color: #431407 !important;
+  color: #FCA5A5 !important;
+}
+[data-theme="dark"] .bg-violet-100.text-violet-700 {
+  background-color: #2e1065 !important;
+  color: #C4B5FD !important;
+}
+[data-theme="dark"] .bg-emerald-100.text-emerald-700 {
+  background-color: #064E3B !important;
+  color: #6EE7B7 !important;
+}
+[data-theme="dark"] .bg-indigo-100.text-indigo-700 {
+  background-color: #1e1b4b !important;
+  color: #A5B4FC !important;
+}
+[data-theme="dark"] .bg-gray-100.text-gray-600 {
+  background-color: #1E293B !important;
+  color: #CBD5E1 !important;
+}
 
-/* Transisi kartu tugas berikutnya & kontak */
+/* =============================================================
+   TOMBOL TEMA (toggle dark/light)
+   ============================================================= */
+#btn-theme {
+  color: var(--text-secondary);
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  min-width: 44px;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#btn-theme:hover {
+  background-color: var(--bg-muted);
+  color: var(--text-primary);
+}
+
+/* =============================================================
+   FOCUS RING GLOBAL (WCAG AA — terlihat di dua tema)
+   ============================================================= */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+.focus-ring:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Focus untuk input native */
+input:focus-visible,
+select:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 2px;
+}
+
+/* =============================================================
+   PROGRESS BAR
+   ============================================================= */
+[role="progressbar"] > div {
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* =============================================================
+   KARTU HOVER TRANSLATE
+   ============================================================= */
 .hover\:-translate-y-0\.5:hover {
   --tw-translate-y: -0.125rem;
 }
 
-/* ===================== RESPONSIF ===================== */
-
-/* Padding section extra pada layar sangat kecil */
-@media (max-width: 360px) {
-  main {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
-  }
+/* =============================================================
+   SLIDE DOWN ANIMATION
+   ============================================================= */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ===================== PRINT ===================== */
+/* =============================================================
+   RESPONSIF
+   ============================================================= */
+@media (max-width: 360px) {
+  main { padding-left: 0.75rem; padding-right: 0.75rem; }
+}
 
-/* Sembunyikan elemen interaktif saat print */
+/* =============================================================
+   PRINT
+   ============================================================= */
 @media print {
-  header,
-  #tanya-buddy,
-  #btn-reset-checklist,
-  footer {
-    display: none;
-  }
-  main {
-    padding: 0;
-  }
+  header, #tanya-buddy, #btn-reset-checklist, footer { display: none; }
+  main { padding: 0; }
+  body { background: white; color: black; }
 }
