@@ -78,7 +78,10 @@
       <div class="bg-gradient-to-br from-primary to-primary-dark rounded-2xl p-6 md:p-8 text-white mb-8">
         <p class="text-blue-200 text-sm font-medium mb-1">Selamat datang di Nusantara Tech 👋</p>
         <h1 id="heading-dashboard" class="text-2xl md:text-3xl font-bold mb-1">Halo, Rina!</h1>
-        <p class="text-blue-100 text-sm mb-4">Junior Frontend Developer &nbsp;·&nbsp; Hari ke-<strong>3</strong> onboarding</p>
+        <p class="text-blue-100 text-sm mb-2">Junior Frontend Developer &nbsp;·&nbsp; Hari ke-<strong>3</strong> onboarding</p>
+
+        <!-- Pesan sambutan dinamis berdasarkan persentase progress — diisi oleh renderDashboard() -->
+        <p id="dashboard-greeting" class="text-white/90 text-sm italic mb-4" aria-live="polite"></p>
 
         <!-- Progress bar total -->
         <div class="bg-white/20 rounded-xl p-4">
@@ -90,6 +93,20 @@
             <div id="total-progress-bar" class="h-full bg-white rounded-full transition-all duration-500" style="width:0%"></div>
           </div>
           <p class="text-blue-100 text-xs mt-2" id="total-progress-desc">Selesaikan tugas checklist untuk meningkatkan progres.</p>
+          <!-- Tombol Reset Progress di dalam kartu progress Dashboard -->
+          <div class="mt-3 flex justify-end">
+            <button
+              id="btn-reset-dashboard"
+              class="flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white text-xs font-medium px-3 py-1.5 rounded-lg transition-colors focus-ring"
+              style="min-height:44px"
+              aria-label="Reset semua progress checklist onboarding"
+            >
+              <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+              </svg>
+              Reset Progress
+            </button>
+          </div>
         </div>
       </div>
 

@@ -338,6 +338,22 @@ function renderDashboard() {
       ? '🎉 Selamat! Semua tugas onboarding selesai!'
       : `${selesai} dari ${total} tugas telah diselesaikan.`;
 
+  // Pesan sambutan dinamis berdasarkan rentang persentase progress
+  const greeting = document.getElementById('dashboard-greeting');
+  if (greeting) {
+    let pesan;
+    if (persen === 100) {
+      pesan = '🏆 Luar biasa! Kamu telah menyelesaikan seluruh proses onboarding!';
+    } else if (persen >= 70) {
+      pesan = '💪 Hampir selesai! Kamu sudah melewati sebagian besar onboarding — tetap semangat!';
+    } else if (persen >= 30) {
+      pesan = '📈 Progresmu bagus! Teruskan dan selesaikan sisa tugas yang ada.';
+    } else {
+      pesan = '🌱 Baru memulai? Tidak apa-apa — mulai dari tugas pertama, satu langkah demi satu langkah!';
+    }
+    greeting.textContent = pesan;
+  }
+
   // Render kartu "Tugas Berikutnya" (maks 3 tugas belum selesai)
   const container = document.getElementById('next-tasks-container');
   const tugasBelum = [];
@@ -754,9 +770,10 @@ function initFaqInteraksi() {
    CHECKLIST: tombol reset
    ============================================================= */
 function initResetChecklist() {
-  document.getElementById('btn-reset-checklist').addEventListener('click', () => {
+  // Fungsi reset yang dipakai bersama oleh dua tombol
+  function lakukanReset() {
     const konfirmasi = confirm(
-      'Apakah kamu yakin ingin mereset semua checklist? Progres akan hilang.'
+      'Apakah kamu yakin ingin mereset semua progress checklist? Semua tanda selesai akan dihapus.'
     );
     if (!konfirmasi) return;
     checklistData.forEach((fase) => {
@@ -764,7 +781,16 @@ function initResetChecklist() {
     });
     renderChecklist();
     renderDashboard();
-  });
+  }
+
+  // Tombol reset di section Checklist
+  document.getElementById('btn-reset-checklist').addEventListener('click', lakukanReset);
+
+  // Tombol "Reset Progress" di Dashboard — menggunakan fungsi yang sama
+  const btnDashboard = document.getElementById('btn-reset-dashboard');
+  if (btnDashboard) {
+    btnDashboard.addEventListener('click', lakukanReset);
+  }
 }
 
 /* =============================================================
